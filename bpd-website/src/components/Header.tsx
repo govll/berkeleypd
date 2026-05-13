@@ -13,10 +13,11 @@ export default function Header() {
       gap: 24, padding: '12px clamp(18px, 4vw, 52px)',
       background: 'rgba(255,255,255,0.97)',
       borderBottom: '1px solid #d8dde5',
+      flexWrap: 'wrap',
     }}>
       <Link href="/" style={{
         display: 'flex', alignItems: 'center', gap: 12,
-        textDecoration: 'none', color: 'inherit', minWidth: 250,
+        textDecoration: 'none', color: 'inherit',
       }}>
         <Image src="/assets/logo.png" alt="BCPD Logo" width={58} height={58} style={{ objectFit: 'contain' }} />
         <span>
@@ -28,23 +29,27 @@ export default function Header() {
       <button
         onClick={() => setOpen(!open)}
         aria-expanded={open}
+        aria-label="Open navigation"
+        className="nav-toggle"
         style={{
-          display: 'none', width: 42, height: 42,
+          width: 42, height: 42,
           flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
           gap: 5, border: '1px solid #d8dde5', borderRadius: 4,
           background: '#fff', cursor: 'pointer',
         }}
-        className="nav-toggle"
       >
         <span style={{ width: 20, height: 2, background: '#171b22', display: 'block' }} />
         <span style={{ width: 20, height: 2, background: '#171b22', display: 'block' }} />
         <span style={{ width: 20, height: 2, background: '#171b22', display: 'block' }} />
       </button>
 
-      <nav className={`site-nav${open ? ' is-open' : ''}`} style={{
-        display: 'flex', alignItems: 'center', gap: 18,
-        fontSize: '0.9rem', fontWeight: 700,
-      }}>
+      <nav
+        className={`site-nav${open ? ' is-open' : ''}`}
+        style={{
+          display: 'flex', alignItems: 'center', gap: 18,
+          fontSize: '0.9rem', fontWeight: 700,
+        }}
+      >
         {[
           ['/', 'Home'],
           ['/opportunities', 'Opportunities'],
@@ -54,7 +59,12 @@ export default function Header() {
           ['/public-information', 'Public Information'],
           ['/forms', 'Forms'],
         ].map(([href, label]) => (
-          <Link key={href} href={href} style={{ textDecoration: 'none', color: '#303846' }}>
+          <Link
+            key={href}
+            href={href}
+            onClick={() => setOpen(false)}
+            style={{ textDecoration: 'none', color: '#303846' }}
+          >
             {label}
           </Link>
         ))}
