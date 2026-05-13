@@ -22,8 +22,9 @@ export const pressRelease = defineType({
     defineField({ name: 'body', title: 'Full Content', type: 'array', of: [{ type: 'block' }] }),
     defineField({
       name: 'bwcFootage',
-      title: 'BWC / Video Footage Cloudflare Stream URL',
+      title: 'BWC / Video Footage URL',
       type: 'url',
+      description: 'Paste any video link here (YouTube, Medal, Google Drive, anything)'
     }),
   ],
 })
