@@ -1,6 +1,6 @@
 import { client } from '@/lib/sanity'
 import { pressReleasesQuery } from '@/lib/queries'
-import { PortableText } from 'next-sanity'
+import Link from 'next/link'
 
 export const revalidate = 60
 
@@ -15,23 +15,23 @@ export default async function PublicInformation() {
       </div>
       <div style={{ display: 'grid', gap: 18, paddingBottom: 'clamp(40px,6vw,76px)' }}>
         {releases?.length > 0 ? releases.map((r: any) => (
-          <article key={r.title} className="card">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, marginBottom: 12 }}>
-              <div>
-                {r.category && <p className="section-label" style={{ marginBottom: 6 }}>{r.category}</p>}
-                <h2 style={{ fontSize: 'clamp(1.3rem,2.4vw,1.8rem)' }}>{r.title}</h2>
-              </div>
-              {r.publishedAt && (
-                <span style={{ background: 'var(--panel)', border: '1px solid var(--line)', padding: '6px 14px', fontSize: '0.8rem', fontWeight: 700, whiteSpace: 'nowrap', color: 'var(--muted)' }}>
-                  {new Date(r.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
-                </span>
-              )}
+          <article key={r.slug} className="card" style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 16, alignItems: 'start' }}>
+            <div>
+              {r.category && <p className="section-label" style={{ marginBottom: 6 }}>{r.category}</p>}
+              <h2 style={{ fontSize: 'clamp(1.3rem,2.4vw,1.8rem)', marginBottom: 8 }}>
+                <Link href={`/public-information/${r.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                  {r.title}
+                </Link>
+              </h2>
+              {r.summary && <p style={{ color: '#3f4754', marginBottom: 12 }}>{r.summary}</p>}
+              <Link href={`/public-information/${r.slug}`} style={{ color: 'var(--blue)', fontWeight: 700, fontSize: '0.9rem', textDecoration: 'none' }}>
+                Read full release &rarr;
+              </Link>
             </div>
-            {r.summary && <p style={{ color: '#3f4754', marginBottom: r.body ? 16 : 0 }}>{r.summary}</p>}
-            {r.body && (
-              <div className="portable-text">
-                <PortableText value={r.body} />
-              </div>
+            {r.publishedAt && (
+              <span style={{ background: 'var(--panel)', border: '1px solid var(--line)', padding: '6px 14px', fontSize: '0.8rem', fontWeight: 700, whiteSpace: 'nowrap', color: 'var(--muted)' }}>
+                {new Date(r.publishedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}
+              </span>
             )}
           </article>
         )) : (

@@ -22,5 +22,11 @@ export const awardsQuery = groq`*[_type == "serviceAward"] | order(date desc){
 }`
 
 export const pressReleasesQuery = groq`*[_type == "pressRelease"] | order(publishedAt desc){
-  title, publishedAt, category, summary, body
+  title, publishedAt, category, summary,
+  "slug": slug.current
+}`
+
+export const pressReleaseBySlugQuery = groq`*[_type == "pressRelease" && slug.current == $slug][0]{
+  title, publishedAt, category, summary, body, bwcFootage,
+  "slug": slug.current
 }`
