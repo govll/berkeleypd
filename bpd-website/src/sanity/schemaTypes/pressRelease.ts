@@ -1,0 +1,16 @@
+import { defineType, defineField } from 'sanity'
+
+export const pressRelease = defineType({
+  name: 'pressRelease',
+  title: 'Press Release / Public Information',
+  type: 'document',
+  fields: [
+    defineField({ name: 'title', title: 'Title', type: 'string' }),
+    defineField({ name: 'publishedAt', title: 'Published Date', type: 'datetime' }),
+    defineField({ name: 'category', title: 'Category', type: 'string',
+      options: { list: ['Press Release', 'Community Notice', 'On Patrol Update', 'Department News'] }
+    }),
+    defineField({ name: 'summary', title: 'Summary (shown in listing)', type: 'text' }),
+    defineField({ name: 'body', title: 'Full Content', type: 'array', of: [{ type: 'block' }] }),
+  ],
+})
