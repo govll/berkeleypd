@@ -15,20 +15,24 @@ export default async function PublicInformation() {
       </div>
       <div className="container" style={{ paddingBottom: 'clamp(40px,6vw,76px)' }}>
         <div className="content-stack">
-          {releases?.length > 0 ? releases.map((r: any) => (
-            <article key={r.slug} className="card">
+          {releases?.length > 0 ? releases.map((r: any, i: number) => (
+            <article key={r.slug ?? i} className="card">
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 16, flexWrap: 'wrap' }}>
                 <div style={{ flex: 1 }}>
                   {r.category && <p className="section-label">{r.category}</p>}
                   <h2 style={{ fontSize: 'clamp(1.3rem,2.4vw,1.8rem)', marginBottom: 8 }}>
-                    <Link href={`/public-information/${r.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                      {r.title}
-                    </Link>
+                    {r.slug ? (
+                      <Link href={`/public-information/${r.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                        {r.title}
+                      </Link>
+                    ) : r.title}
                   </h2>
                   {r.summary && <p style={{ color: '#3f4754', marginBottom: 12 }}>{r.summary}</p>}
-                  <Link href={`/public-information/${r.slug}`} style={{ color: 'var(--blue)', fontWeight: 700, fontSize: '0.9rem', textDecoration: 'none' }}>
-                    Read full release →
-                  </Link>
+                  {r.slug && (
+                    <Link href={`/public-information/${r.slug}`} style={{ color: 'var(--blue)', fontWeight: 700, fontSize: '0.9rem', textDecoration: 'none' }}>
+                      Read full release →
+                    </Link>
+                  )}
                 </div>
                 {r.publishedAt && (
                   <span className="date-badge">
